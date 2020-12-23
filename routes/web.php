@@ -25,6 +25,7 @@ Route::group(['middleware'=>['sess']], function(){
 	Route::get('/home', 'homeController@index')->name('home.index')->middleware('sess');
 	//Route::get('/admin/user/stdlist', 'homeController@stdlist')->name('home.stdlist');
 	Route::get('/stdlist', ['uses'=> 'homeController@stdlist', 'as'=> 'home.stdlist']);
+	Route::get('/joblist', ['uses'=> 'homeController@joblist', 'as'=> 'home.joblist']);
 	Route::get('/details/{id}', 'homeController@show')->name('home.show');
 
 	Route::group(['middleware'=>['type']], function(){
@@ -32,8 +33,15 @@ Route::group(['middleware'=>['sess']], function(){
 		Route::post('/create', 'homeController@store');
 		Route::get('/edit/{id}', 'homeController@edit')->name('home.edit');
 		Route::post('/edit/{id}', 'homeController@update');
+		Route::get('/editJob/{id}', 'homeController@editJob')->name('home.editJob');
+		Route::post('/editJob/{id}', 'homeController@updateJob');
+		Route::get('/showJob/{id}', 'homeController@showJob')->name('home.showJob');
 		Route::get('/delete/{id}', 'homeController@delete')->name('home.delete');
 		Route::post('/delete/{id}', 'homeController@destroy');
+		Route::get('/deleteJob/{id}', 'homeController@deleteJob')->name('home.deleteJob');
+		Route::post('/deleteJob/{id}', 'homeController@destroyJob');
+		Route::get('/createJob', 'homeController@createJob')->name('home.createJob');
+		Route::post('/createJob', 'homeController@storeJob');
 		Route::get('/search', 'homeController@search')->name('home.search');
 	});
 	

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Home page</title>
+	<title>Create Job</title>
 </head>
 <body>
 	<a href="{{route('home.index')}}">Back</a> |
@@ -13,27 +13,23 @@
 
 			<input type="hidden" name="_token" value="{{csrf_token()}}">
 			<fieldset>
-				<legend>Create Employer</legend>
+				<legend>Create Job</legend>
 			<table>
 				<tr>
-					<td>Employer Name</td>
-					<td><input type="text" name="name" value="{{old('name')}}"></td>
+					<td>Job Title</td>
+					<td><input type="text" name="job_title" value="{{old('job_title')}}"></td>
 				</tr>
 				<tr>
 					<td>Company Name</td>
 					<td><input type="text" name="company_name" value="{{old('company_name')}}"></td>
 				</tr>
 				<tr>
-					<td>Contact no</td>
-					<td><input type="text" name="contact" value="{{old('contact')}}"></td>
+					<td>Job Location</td>
+					<td><input type="text" name="job_location" value="{{old('job_location')}}"></td>
 				</tr>
 				<tr>
-					<td>Username</td>
-					<td><input type="text" name="username" value="{{old('username')}}" autocomplete="off"></td>
-				</tr>
-				<tr>
-					<td>Password</td>
-					<td><input type="password" name="password" value="{{old('password')}}" autocomplete="new-password"></td>
+					<td>Salary</td>
+					<td><input type="text" name="salary" value="{{old('salary')}}" autocomplete="off"></td>
 				</tr>
 				<tr>
 					<td></td>

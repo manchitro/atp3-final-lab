@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\employerRequest;
+use App\Http\Requests\jobRequest;
 use Validator;
 use App\User;
+use App\Job;
 
 class homeController extends Controller
 {
@@ -44,10 +46,23 @@ class homeController extends Controller
     	return view('home.stdlist')->with('students', $students);
     }
 
+    public function joblist(){
+    	//$students = $this->getStudentlist();
+
+        $jobs = Job::all();
+    	return view('home.joblist')->with('jobs', $jobs);
+    }
+
 	public function show($id){
     	
         $std = User::find($id);
         return view('home.show', $std);
+    }
+
+    public function showJob($id){
+    	
+        $std = Job::find($id);
+        return view('home.showJob', $std);
     }
 
     public function create(){
@@ -81,6 +96,13 @@ class homeController extends Controller
         
     }
 
+    public function editJob($id){
+    	
+        $std = Job::find($id);
+        return view('home.editJob')->with('std', $std);
+        
+    }
+
     public function update($id, Request $req){
     	   
         $user = User::find($id);
@@ -96,6 +118,19 @@ class homeController extends Controller
     	return redirect()->route('home.stdlist');
     }
 
+    public function updateJob($id, Request $req){
+    	   
+        $job = Job::find($id);
+
+        $job->job_title = $req->job_title;
+        $job->company_name = $req->company_name;
+        $job->job_location = $req->job_location;
+        $job->salary = $req->salary;
+        $job->save();
+
+    	return redirect()->route('home.joblist');
+    }
+
     public function delete($id){
 
          $std = User::find($id);
@@ -103,6 +138,14 @@ class homeController extends Controller
     	
     	//return view('home.stdlist');
     }
+
+    public function deleteJob($id){
+
+        $std = Job::find($id);
+         return view('home.deleteJob', $std);
+       
+       //return view('home.stdlist');
+   }
 
     public function destroy($id,Request $req){
 
@@ -118,10 +161,46 @@ class homeController extends Controller
     	//return view('home.stdlist');
     }
 
-    public function search(){
-        $employers = User::where('type','=', 'employer');
-        return view('home.search')->with('employers', $employers);  
+    public function destroyJob($id,Request $req){
+
+        
+    	$job = Job::find($id);
+
+        $job->job_title = $req->job_title;
+        $job->company_name = $req->company_name;
+        $job->job_location = $req->job_location;
+        $job->salary = $req->salary;
+        $job->delete();
+
+        return redirect()->route('home.joblist');
+    	//return view('home.stdlist');
     }
+
+    public function search(){
+        $employers = User::where('type','=','employer');
+        return view('home.search')->with('employers', $employers); 
+    }
+
+    public function createJob(){
+        return view('home.createJob'); 
+    }
+
+    public function storeJob(jobRequest $req){
+            
+        $job = new Job();
+
+        $job->job_title = $req->job_title;
+        $job->company_name = $req->company_name;
+        $job->job_location = $req->job_location;
+        $job->salary = $req->salary;
+
+        if($job->save()){
+            return redirect()->route('home.joblist');
+        }
+        else{
+            echo "Job could not be created";
+        }
+}
 
     private function getStudentlist(){
 
