@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
-use App\Http\Requests\studentRequest;
+use App\Http\Requests\employerRequest;
 use Validator;
 use App\User;
 
@@ -55,39 +55,42 @@ class homeController extends Controller
     	return view('home.create');
     }
 
-    public function store(studentRequest $req){
-
-        $file = $req->file('myimg');
+    public function store(employerRequest $req){
             
             $user = new User();
 
-            $user->name         = $req->name;
-            $user->username     = $req->username;
-            $user->password     = $req->password;
-            $user->type         = "employer";
+            $user->name = $req->name;
+            $user->company_name = $req->company_name;
+            $user->contact_no = $req->contact;
+            $user->username = $req->username;
+            $user->password = $req->password;
+            $user->type     = "employer";
 
             if($user->save()){
                 return redirect()->route('home.stdlist');
             }
-
-        
-
-    	//return redirect()->route('home.stdlist');
+            else{
+                echo "Employer could not be created";
+            }
     }
 
     public function edit($id){
     	
         $std = User::find($id);
-    	return view('home.edit', $std);
+        return view('home.edit')->with('std', $std);
+        
     }
 
     public function update($id, Request $req){
     	   
         $user = User::find($id);
 
+        $user->name = $req->name;
+        $user->company_name = $req->company_name;
+        $user->contact_no = $req->contact;
         $user->username = $req->username;
         $user->password = $req->password;
-        $user->type     = $req->type;
+        $user->type     = "employer";
         $user->save();
 
     	return redirect()->route('home.stdlist');
@@ -113,6 +116,11 @@ class homeController extends Controller
 
         return redirect()->route('home.stdlist');
     	//return view('home.stdlist');
+    }
+
+    public function search(){
+        $employers = User::where('type','=', 'employer');
+        return view('home.search')->with('employers', $employers);  
     }
 
     private function getStudentlist(){

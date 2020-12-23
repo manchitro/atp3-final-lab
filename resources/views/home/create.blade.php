@@ -20,6 +20,14 @@
 					<td><input type="text" name="name" value="{{old('name')}}"></td>
 				</tr>
 				<tr>
+					<td>Company Name</td>
+					<td><input type="text" name="company_name" value="{{old('company-name')}}"></td>
+				</tr>
+				<tr>
+					<td>Contact no</td>
+					<td><input type="text" name="contact" value="{{old('contact')}}"></td>
+				</tr>
+				<tr>
 					<td>Username</td>
 					<td><input type="text" name="username" value="{{old('username')}}" autocomplete="off"></td>
 				</tr>

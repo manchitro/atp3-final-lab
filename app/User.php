@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class User extends Model
 {
-   	protected $table = 'user';
+   	protected $table = 'users';
 	protected $primaryKey = "id";
 	public $timestamps = false;
 
-	//const CREATED_AT = "create_time";
-	//const UPDATED_AT = "update_time";
+	const CREATED_AT = "created_at";
+	const UPDATED_AT = "last_update";
 }
